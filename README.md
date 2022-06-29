@@ -2,7 +2,7 @@
 
 You can find the data I worked with in the "Data.xlsx" and reproduce my analyses and figures in the "Analyses_RScript.R". 
 
-The raw log files from the narrative insight task can be found in the ZIP "Logs.zip".
+The raw log files from the narrative insight task can be found in "Logs.zip".
 
 For my fMRI analyses I used the "Preprocessing_Pipeline.m", "First_Level_Mismatch" (for the link phase analyses), "First_Level_Univariate" (for the pre- and post changes), 
 "First_Level_RSA" (for the RSA analysis). 
