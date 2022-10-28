@@ -473,6 +473,7 @@ my_data[my_data$Stress.x== G,][which(my_data[my_data$Stress.x== G , V] < (mean(p
 
 # VPs 050 (Control) and 027 (Stress) are outliers in AUCi, VP 050 also in AUCg
 
+backup_2 <- my_data
 my_data <- backup_2
 my_data$Link_AB <- (my_data$FreeRecall_A_total.y + my_data$Link_Free)/2
 my_data$Free_Diff <- my_data$Link_AB - my_data$NonLink_Free
@@ -482,44 +483,6 @@ my_data$RSA_Change_AB <- my_data$RSA_RightAntHC_AB_post - my_data$RSA_RightAntHC
 
 backup_2 <- my_data
 
-
-# AUCg and LinkAB 
-my_data <- backup_2
-my_data <- my_data[c(-20),] #AUCg
-V = "AUCg"
-C = "Link_AB"
-cor.test(pull(my_data[, V ,]),
-         pull(my_data[, C ,]))
-
-ggplot(my_data, aes_string(V, C)) +
-  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
-  ggtitle('both')
-
-# AUCg and Nonlink free recall
-my_data <- backup_2
-my_data <- my_data[c(-20, -8, -11),] #AUCg
-V = "AUCg"
-C = "NonLink_Free"
-cor.test(pull(my_data[, V ,]),
-         pull(my_data[, C ,]))
-
-ggplot(my_data, aes_string(V, C)) +
-  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
-  ggtitle('both')
-
-
-
-# AUCg and Orbitofrontal change
-my_data <- backup_2
-my_data <- my_data[c(-20),] #AUCg
-V = "AUCg"
-C = "OrbFront_R_ChangePrePost"
-cor.test(pull(my_data[, V ,]),
-         pull(my_data[, C ,]))
-
-ggplot(my_data, aes_string(V, C)) +
-  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
-  ggtitle('both')
 
 
 #--------------
@@ -543,6 +506,21 @@ G = "Control"
 ggplot(my_data[my_data$Stress.x == G ,], aes_string(V, C)) +
     geom_point(size=3, shape=19, colour = "darkslategray4") + apatheme  + geom_smooth(method='lm', colour = "darkslategray4", fill = "darkslategray4", alpha = 0.2) +
     xlab(bquote(AUC[I])) + ylab('Euclidian distance') + coord_cartesian(ylim = c(0, .1), xlim = c(-340,530))
+
+
+
+# AUCg and Orbitofrontal change
+my_data <- backup_2
+my_data <- my_data[c(-20, -10),] #AUCg
+V = "AUCi"
+C = "OrbFront_R_ChangePrePost"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
+
+ggplot(my_data, aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
 
 
 
@@ -1754,34 +1732,13 @@ p+coord_cartesian(ylim = c(0, 29))  +
 
 total$Link_AB <- (total$FreeRecall_A_total.y + total$Link_Free)/2
 
-cor.test(total[total$Stress.x=="Stress" ,]$Link_Details, 
-         total[total$Stress.x=="Stress" ,]$Link_AB)
 
-cor.test(total[total$Stress.x=="Control" ,]$Link_Details, 
-         total[total$Stress.x=="Control" ,]$Link_AB)
+cor.test(total$Link_Details, 
+         total$Link_AB)
 
 
-cor.test(total[total$Stress.x=="Stress" ,]$Link_Details, 
-         total[total$Stress.x=="Stress" ,]$NonLink_Free)
-
-cor.test(total[total$Stress.x=="Control" ,]$Link_Details, 
-         total[total$Stress.x=="Control" ,]$NonLink_Free)
-
-
-
-# cor.test(total[total$Stress.x=="Stress" ,]$Link_Details, 
-#          total[total$Stress.x=="Stress" ,]$FreeRecall_A_total.y)
-# 
-# cor.test(total[total$Stress.x=="Control" ,]$Link_Details, 
-#          total[total$Stress.x=="Control" ,]$FreeRecall_A_total.y)
-# 
-# 
-# cor.test(total[total$Stress.x=="Stress" ,]$Link_Details, 
-#          total[total$Stress.x=="Stress" ,]$Link_Free)
-# 
-# cor.test(total[total$Stress.x=="Control" ,]$Link_Details, 
-#          total[total$Stress.x=="Control" ,]$Link_Free)
-
+cor.test(total$Link_Details, 
+         total$NonLink_Free)
 
 #----------------------------------------------------------
 #-------------------------------------------------------------
@@ -1793,12 +1750,13 @@ my_data$Post_Diff <- my_data$Mean_LinkPost - my_data$Mean_NonLinkPost
 my_data$ARENA_Diff <- my_data$Mean_ARENA_Link - my_data$Mean_ARENA_NonLink
 my_data$RSA_Change_AB <- my_data$RSA_RightAntHC_AB_post - my_data$RSA_RightAntHC_AB_pre
 
+backup <- my_data
 
 
 # Check outliers
 my_data <- backup
 G = "Control"
-V = "Link_AB"
+V = "NonLink_Free"
 my_data[my_data$Stress.x== G,][which(my_data[my_data$Stress.x== G , V] > (mean(pull(my_data[my_data$Stress.x== G, V]), na.rm = T) + (2.5*SD(my_data[my_data$Stress.x== G , V])))),]
 my_data[my_data$Stress.x== G,][which(my_data[my_data$Stress.x== G , V] < (mean(pull(my_data[my_data$Stress.x== G, V]), na.rm = T) - (2.5*SD(my_data[my_data$Stress.x== G , V])))),]
 
@@ -1809,9 +1767,10 @@ my_data[my_data$Stress.x== G,][which(my_data[my_data$Stress.x== G , V] < (mean(p
 
 
 #Correlations
+
 my_data <- backup
-my_data <- my_data[c(-38, -44),] 
-V = "RSA_RightAntHC_AB_post"
+my_data <- my_data[c(-1, -2, -8, -19, -44),] 
+V = "Post_Diff"
 C = "CuedRecall"
 cor.test(pull(my_data[, V ,]),
          pull(my_data[, C ,]))
@@ -1821,23 +1780,120 @@ ggplot(my_data, aes_string(V, C)) +
   ggtitle('both')
 
 
-G = "Stress"
-cor.test(pull(my_data[my_data$Stress.x== G  , V ,]),
-         pull(my_data[my_data$Stress.x== G  , C ,]))
 
+my_data <- backup
+my_data <- my_data[c(-22, -45, -44),] 
+V = "Mean_ARENA_Link"
+C = "CuedRecall"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
 
-ggplot(my_data[my_data$Stress.x == G ,], aes_string(V, C)) +
+ggplot(my_data, aes_string(V, C)) +
   geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
-  ggtitle(G)
+  ggtitle('both')
 
 
-G = "Control"
-cor.test(pull(my_data[my_data$Stress.x== G  , V ,]),
-         pull(my_data[my_data$Stress.x== G  , C ,]))
 
+my_data <- backup
+my_data <- my_data[c(-22, -45),] 
+V = "Mean_LinkPost"
+C = "Mean_ARENA_Link"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
 
-ggplot(my_data[my_data$Stress.x == G ,], aes_string(V, C)) +
+ggplot(my_data, aes_string(V, C)) +
   geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
-  ggtitle(G)
+  ggtitle('both')
+
+
+my_data <- backup
+my_data <- my_data[c(-1, -2, -8, -19, -22, -45),] 
+V = "Post_Diff"
+C = "Mean_ARENA_Link"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
+
+ggplot(my_data, aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
+
+my_data <- backup
+my_data <- my_data[c(-16, -22, -45),] 
+V = "Link_AB"
+C = "Mean_ARENA_Link"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
+
+ggplot(my_data, aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
+
+my_data <- backup
+my_data <- my_data[c(-38),] 
+V = "RSA_RightAntHC_AB_post"
+C = "Mean_ARENA_NonLink"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
+
+ggplot(my_data, aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
+my_data <- backup
+my_data <- my_data[c(-38, -22, -45),] 
+V = "RSA_RightAntHC_AB_post"
+C = "ARENA_Diff"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
+
+ggplot(my_data, aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
+#-------
+my_data <- backup
+my_data <- my_data[c(-8, -11),] 
+V = "Left_Amy_LinkvsCon"
+C = "NonLink_Free"
+cor.test(pull(my_data[my_data$Stress.x == "Stress", V ,]),
+         pull(my_data[my_data$Stress.x == "Stress", C ,]))
+
+ggplot(my_data[my_data$Stress.x == "Stress",], aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
+my_data <- backup
+my_data <- my_data[c(-8, -11),] 
+V = "Left_Amy_LinkvsCon"
+C = "NonLink_Free"
+cor.test(pull(my_data[my_data$Stress.x == "Control", V ,]),
+         pull(my_data[my_data$Stress.x == "Control", C ,]))
+
+ggplot(my_data[my_data$Stress.x == "Control",], aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
+
+
+my_data <- backup
+my_data <- my_data[c(-8, -11),] 
+V = "PHC_ant_R_ChangePrePost"
+C = "NonLink_Free"
+cor.test(pull(my_data[, V ,]),
+         pull(my_data[, C ,]))
+
+ggplot(my_data, aes_string(V, C)) +
+  geom_point(size=2, shape=19) + apatheme  + geom_smooth(method='lm')+ xlab(V) + ylab(C) +
+  ggtitle('both')
+
+
 
 
