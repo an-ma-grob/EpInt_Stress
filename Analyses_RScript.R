@@ -754,15 +754,6 @@ Cor1$Insight_Diff <- Cor1$Mean_LinkPost - Cor1$Mean_NonLinkPost
 
 cor.test(Cor1$Insight_Diff, Cor1$CuedRecall)
 
-# #---------------------------------------
-# # Association Cued Recall and ARENA
-# 
-# Cor1 <- total
-# Cor1 <- Cor1[c(-44, -22, -45),]
-# 
-# 
-# cor.test(Cor1$CuedRecall, Cor1$Mean_ARENA_NonLink)
-
 --------------------------------------------------------------------------------------------------------------
   ### ARENA ###
   
