@@ -1675,27 +1675,11 @@ Free_long[Free_long$Stress== G,][which(Free_long[Free_long$Stress== G & Free_lon
 Free_long[Free_long$Stress== G,][which(Free_long[Free_long$Stress== G & Free_long$Item == I, V] < (mean(Free_long[Free_long$Stress== G & Free_long$Item == I, V], na.rm = T) - (2.5*SD(Free_long[Free_long$Stress== G & Free_long$Item == I, V])))),]
 
 
+t.test(Free_long[which(Free_long$Item == "A"),]$Details,
+       Free_long[which( Free_long$Item == "X"),]$Details, paired = T)
 
-
-t.test(Free_long[which(Free_long$Stress == "Stress" & Free_long$Item == "A"),]$Details,
-       Free_long[which(Free_long$Stress == "Stress" & Free_long$Item == "B"),]$Details, paired = T)
-
-t.test(Free_long[which(Free_long$Stress == "Control" & Free_long$Item == "A"),]$Details,
-       Free_long[which(Free_long$Stress == "Control" & Free_long$Item == "B"),]$Details, paired = T)
-
-
-t.test(Free_long[which(Free_long$Stress == "Stress" & Free_long$Item == "A"),]$Details,
-       Free_long[which(Free_long$Stress == "Stress" & Free_long$Item == "X"),]$Details, paired = T)
-
-t.test(Free_long[which(Free_long$Stress == "Control" & Free_long$Item == "A"),]$Details,
-       Free_long[which(Free_long$Stress == "Control" & Free_long$Item == "X"),]$Details, paired = T)
-
-
-t.test(Free_long[which(Free_long$Stress == "Stress" & Free_long$Item == "B"),]$Details,
-       Free_long[which(Free_long$Stress == "Stress" & Free_long$Item == "X"),]$Details, paired = T)
-
-t.test(Free_long[which(Free_long$Stress == "Control" & Free_long$Item == "B"),]$Details,
-       Free_long[which(Free_long$Stress == "Control" & Free_long$Item == "X"),]$Details, paired = T)
+t.test(Free_long[which(Free_long$Item == "B"),]$Details,
+       Free_long[which( Free_long$Item == "X"),]$Details, paired = T)
 
 
 
