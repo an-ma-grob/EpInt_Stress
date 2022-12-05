@@ -25,7 +25,7 @@ library("xlsx")
 library(rstatix)
 library(matrixTests)
 
-setwd("W:/Allgemeine 2 Psy/Mitarbeiter/Anna-Maria/Paper/Stress_Paper/Code")
+setwd("\\YOUR DIRECTORY")
 total <- read_excel("Data.xlsx")
 my_data <- total
 backup <- total
